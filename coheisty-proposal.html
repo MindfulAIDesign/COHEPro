@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cohesity - Cybersecurity Sales Intelligence Proposal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: #e0e6ed;
+            min-height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: rgba(15, 20, 40, 0.8);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(0, 194, 255, 0.2);
+            padding: 2rem 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo {
+            padding: 0 1.5rem 2rem;
+            border-bottom: 1px solid rgba(0, 194, 255, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        .logo h1 {
+            color: #00c2ff;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .logo p {
+            color: #6b7b9a;
+            font-size: 0.85rem;
+        }
+
+        .nav-item {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .nav-item:hover {
+            background: rgba(0, 194, 255, 0.1);
+            border-left-color: #00c2ff;
+        }
+
+        .nav-item.active {
+            background: rgba(0, 194, 255, 0.15);
+            border-left-color: #00c2ff;
+            color: #00c2ff;
+        }
+
+        .nav-icon {
+            font-size: 1.2rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            flex: 1;
+            padding: 2rem;
+            width: calc(100% - 280px);
+        }
+
+        .header {
+            background: rgba(15, 20, 40, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 194, 255, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        .header h2 {
+            color: #00c2ff;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            color: #a0aec0;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00c2ff 0%, #0080ff 100%);
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 194, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 194, 255, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e0e6ed;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: rgba(15, 20, 40, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 194, 255, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card h3 {
+            color: #00c2ff;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card h4 {
+            color: #00c2ff;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .card p {
+            color: #a0aec0;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card li {
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border-left: 3px solid #00c2ff;
+            color: #e0e6ed;
+        }
+
+        .card strong {
+            color: #00c2ff;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-card {
+            background: rgba(0, 194, 255, 0.1);
+            border: 2px solid #00c2ff;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .pricing-card .old-price {
+            text-decoration: line-through;
+            color: #6b7b9a;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-card .new-price {
+            font-size: 3rem;
+            color: #00c2ff;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-card .savings {
+            background: #00c2ff;
+            color: #0a0e27;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(15, 20, 40, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 194, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            color: #00c2ff;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 194, 255, 0.5);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 194, 255, 0.7);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h1>Cohesity</h1>
+                <p>Cybersecurity Sales Intelligence</p>
+            </div>
+            <nav>
+                <div class="nav-item active" data-section="overview">
+                    <span class="nav-icon">🎯</span>
+                    <span>Overview</span>
+                </div>
+                <div class="nav-item" data-section="capabilities">
+                    <span class="nav-icon">🤖</span>
+                    <span>Intelligence Capabilities</span>
+                </div>
+                <div class="nav-item" data-section="deliverables">
+                    <span class="nav-icon">📦</span>
+                    <span>Deliverables</span>
+                </div>
+                <div class="nav-item" data-section="investment">
+                    <span class="nav-icon">💰</span>
+                    <span>Investment</span>
+                </div>
+                <div class="nav-item" data-section="roi">
+                    <span class="nav-icon">📈</span>
+                    <span>ROI & Impact</span>
+                </div>
+                <div class="nav-item" data-section="next-steps">
+                    <span class="nav-icon">🚀</span>
+                    <span>Next Steps</span>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Overview Section -->
+            <div class="content-section active" id="overview">
+                <div class="header">
+                    <h2>AI-Driven Cybersecurity Sales Intelligence Ecosystem</h2>
+                    <p>Transform your sales process with AI that reads company documents, generates tailored insights, and creates compelling cybersecurity narratives that win deals.</p>
+                    <div class="action-buttons">
+                        <a href="https://mindfulaidesign.github.io/CSB/" target="_blank" class="btn btn-primary">
+                            🚀 View GPT Prototype
+                        </a>
+                        <a href="https://drive.google.com/file/d/1kvQ3MuB1WxtCT5elFSbazovpzwp_aWRQ/view?usp=sharing" target="_blank" class="btn btn-secondary">
+                            📄 Download PDF Proposal
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>The Challenge</h3>
+                    <p>Your sales team routinely spends extensive time reading 10-Ks, company websites, annual reports, and technical PDFs to prepare for conversations. This research is essential but time-consuming, inconsistent across team members, and often completed under tight deadlines.</p>
+                    
+                    <h4>What You Need:</h4>
+                    <ul>
+                        <li>⚡ <strong>Faster Research</strong> - AI that reads and analyzes documents in minutes, not hours</li>
+                        <li>🎯 <strong>Tailored Messaging</strong> - Discovery questions and talk tracks customized per prospect</li>
+                        <li>📊 <strong>Risk Narratives</strong> - Compelling cybersecurity stories that resonate with buyers</li>
+                        <li>🎨 <strong>Visual Materials</strong> - Slides and infographics that simplify complex concepts</li>
+                        <li>🏆 <strong>Competitive Edge</strong> - Consistent, high-quality preparation across all reps</li>
+                        <li>🔒 <strong>Secure Workspace</strong> - Data privacy and safe AI usage</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>The Solution</h3>
+                    <p>The <strong>Cohesity Cybersecurity Sales Intelligence Ecosystem</strong> - a unified AI system designed to transform your sales research, messaging, and customer engagement.</p>
+                    
+                    <p>This ecosystem delivers:</p>
+                    <ul>
+                        <li>Custom Cybersecurity GPT trained for your domain</li>
+                        <li>AI that reads 10-Ks, annual reports, websites, and PDFs</li>
+                        <li>Automated discovery questions, talk tracks, and objection handling</li>
+                        <li>Executive summaries, pre-call briefs, and competitive insights</li>
+                        <li>AI-generated visuals and presentation materials</li>
+                        <li>Structured intake → output workflow</li>
+                        <li>Secure business workspace</li>
+                        <li>Training for maximum ROI</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Capabilities Section -->
+            <div class="content-section" id="capabilities">
+                <div class="header">
+                    <h2>Intelligence Capabilities</h2>
+                    <p>What the AI system does for your sales team</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <h3>🧠 Custom Cybersecurity GPT</h3>
+                        <p>A dedicated AI engine trained specifically on cybersecurity language, customer scenarios, risk modeling, and Coheisty's value propositions.</p>
+                        <p><strong>Capabilities:</strong></p>
+                        <ul>
+                            <li>Understands cybersecurity terminology</li>
+                            <li>Knows your solutions and positioning</li>
+                            <li>Generates risk-based narratives</li>
+                            <li>Adapts to different buyer personas</li>
+                            <li>Maintains consistent messaging</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>📄 Multi-Document Intelligence</h3>
+                        <p>Reads and synthesizes multiple sources simultaneously.</p>
+                        <p><strong>Analyzes:</strong></p>
+                        <ul>
+                            <li>10-Ks and annual reports</li>
+                            <li>Strategic initiatives</li>
+                            <li>Company websites</li>
+                            <li>Technical PDFs and whitepapers</li>
+                            <li>News and press releases</li>
+                            <li>Produces actionable summaries</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>💬 Sales Messaging Engine</h3>
+                        <p>Generates customer-specific talk tracks and positioning.</p>
+                        <p><strong>Creates:</strong></p>
+                        <ul>
+                            <li>Discovery questions tailored to industry</li>
+                            <li>Objection-handling guides</li>
+                            <li>Competitive positioning scripts</li>
+                            <li>Command-of-the-Message mantras</li>
+                            <li>Risk-based narratives</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>🎨 Visual Content Generator</h3>
+                        <p>Creates presentation materials and visual aids.</p>
+                        <p><strong>Produces:</strong></p>
+                        <ul>
+                            <li>Custom slide decks</li>
+                            <li>Infographics and diagrams</li>
+                            <li>Executive summaries</li>
+                            <li>Threat visualizations</li>
+                            <li>ROI calculators</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>📋 Pre-Call Intelligence</h3>
+                        <p>Automated briefing generation for every conversation.</p>
+                        <p><strong>Delivers:</strong></p>
+                        <ul>
+                            <li>Company risk profiles</li>
+                            <li>Industry-specific threats</li>
+                            <li>Competitive landscape</li>
+                            <li>Key talking points</li>
+                            <li>Stakeholder insights</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>🔒 Secure Workspace</h3>
+                        <p>Your team's private AI environment with full data protection.</p>
+                        <p><strong>Includes:</strong></p>
+                        <ul>
+                            <li>Confidentiality guardrails</li>
+                            <li>Role-based permissions</li>
+                            <li>Version control</li>
+                            <li>No training on your data</li>
+                            <li>Monthly maintenance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Deliverables Section -->
+            <div class="content-section" id="deliverables">
+                <div class="header">
+                    <h2>Complete Deliverables Package</h2>
+                    <p>Everything your team needs for success</p>
+                </div>
+
+                <div class="card">
+                    <h3>🤖 AI Systems (3 Components)</h3>
+                    <ul>
+                        <li><strong>1. Custom Cybersecurity GPT</strong> - Trained on cyber language, scenarios, and your value props</li>
+                        <li><strong>2. Multi-Document Intelligence Engine</strong> - Reads 10-Ks, reports, websites, PDFs</li>
+                        <li><strong>3. Sales Messaging & Talk Track Engine</strong> - Generates discovery questions, objection handling, positioning scripts</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>⚙️ Workflows & Setup (2 Components)</h3>
+                    <ul>
+                        <li><strong>4. Intake → Output Workflow Builder</strong> - Structured process for pre-call briefs, risk summaries, competitive positioning</li>
+                        <li><strong>5. Secure Business Workspace + Monthly Maintenance</strong> - Private workspace with guardrails and data protection</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>🎓 Training & Knowledge Transfer (4 Components)</h3>
+                    <ul>
+                        <li><strong>6. Two (2) Live Training Sessions</strong> - Hands-on, scenario-based training for your team</li>
+                        <li><strong>7. AI Playbook PDF</strong> - Prompting strategies, workflows, safety guidelines, use cases</li>
+                        <li><strong>8. On-Demand Training</strong> - Presentation & visual building with AI</li>
+                        <li><strong>9. Sales Playbook Creation</strong> - Custom internal playbook with your messaging and workflows</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Investment Section -->
+            <div class="content-section" id="investment">
+                <div class="header">
+                    <h2>Investment & Value</h2>
+                    <p>Enterprise AI at a transformational price</p>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="old-price">À la carte value: $23,450</div>
+                    <div class="new-price">$14,900</div>
+                    <p style="color: #a0aec0; margin-bottom: 1rem;">Complete Bundle Price</p>
+                    <div class="savings">Save $8,550 (36% Discount)</div>
+                </div>
+
+                <div class="card" style="margin-top: 2rem;">
+                    <h3>What's Included in Your Investment</h3>
+                    <ul>
+                        <li>✅ Custom Cybersecurity GPT trained for your domain</li>
+                        <li>✅ Multi-Document Intelligence Engine</li>
+                        <li>✅ Sales Messaging & Talk Track Engine</li>
+                        <li>✅ Intake → Output Workflow Builder</li>
+                        <li>✅ Secure Business Workspace + Monthly Maintenance</li>
+                        <li>✅ Two (2) Live Training Sessions</li>
+                        <li>✅ AI Playbook PDF</li>
+                        <li>✅ On-Demand Visual Training</li>
+                        <li>✅ Custom Sales Playbook Creation</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Flexible Payment Options</h3>
+                    
+                    <h4>Option 1 - 50/50 Split</h4>
+                    <ul>
+                        <li>50% deposit to begin ($7,450)</li>
+                        <li>50% due at final delivery ($7,450)</li>
+                    </ul>
+
+                    <h4>Option 2 - 1/3 Milestones</h4>
+                    <ul>
+                        <li>33% deposit to begin ($4,917)</li>
+                        <li>33% after workflow implementation ($4,917)</li>
+                        <li>33% upon final project delivery ($4,916)</li>
+                    </ul>
+
+                    <h4>Option 3 - 1/4 Milestone Plan</h4>
+                    <ul>
+                        <li>25% deposit ($3,725)</li>
+                        <li>25% after GPT build ($3,725)</li>
+                        <li>25% after workflow build ($3,725)</li>
+                        <li>25% at final delivery ($3,725)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ROI Section -->
+            <div class="content-section" id="roi">
+                <div class="header">
+                    <h2>ROI & Sales Impact</h2>
+                    <p>Quantifiable improvements to your sales performance</p>
+                </div>
+
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">80%</div>
+                        <div class="stat-label">Faster Research</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">15hrs</div>
+                        <div class="stat-label">Saved Per Rep/Week</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">45%</div>
+                        <div class="stat-label">Higher Win Rates</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">Consistency</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Time Savings Breakdown</h3>
+                    <p><strong>Current Process:</strong> 3-5 hours per deal (reading 10-Ks, research, prep, slide creation)</p>
+                    <p><strong>With AI System:</strong> 30-60 minutes per deal (AI analysis, review, customization)</p>
+                    <p><strong>Time Saved:</strong> 2.5-4 hours per deal</p>
+                    <p><strong>Weekly Impact:</strong> Assuming 4 deals/week = 10-16 hours saved per rep</p>
+                </div>
+
+                <div class="card">
+                    <h3>Sales Performance Improvements</h3>
+                    <ul>
+                        <li><strong>Better Preparation:</strong> Every rep walks in with deep insights</li>
+                        <li><strong>Stronger Messaging:</strong> Consistent, risk-based narratives that resonate</li>
+                        <li><strong>Faster Response:</strong> Quick turnaround on RFPs and proposals</li>
+                        <li><strong>Higher Confidence:</strong> Reps feel prepared and professional</li>
+                        <li><strong>Competitive Advantage:</strong> Differentiate through preparation quality</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Strategic Advantages</h3>
+                    <ul>
+                        <li><strong>Scalable Expertise:</strong> Your best practices available to every rep</li>
+                        <li><strong>Faster Onboarding:</strong> New reps get up to speed quickly</li>
+                        <li><strong>Knowledge Capture:</strong> Institutional knowledge encoded in AI</li>
+                        <li><strong>Data-Driven Insights:</strong> Learn what messaging works best</li>
+                        <li><strong>AI-Forward Brand:</strong> Position Cohesity as an advanced partner</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Next Steps Section -->
+            <div class="content-section" id="next-steps">
+                <div class="header">
+                    <h2>Ready to Transform Your Sales Process?</h2>
+                    <p>Let's build your cybersecurity sales intelligence ecosystem</p>
+                    <div class="action-buttons">
+                        <a href="https://mindfulaidesign.github.io/CSB/" target="_blank" class="btn btn-primary">
+                            🚀 View GPT Prototype
+                        </a>
+                        <a href="https://drive.google.com/file/d/1kvQ3MuB1WxtCT5elFSbazovpzwp_aWRQ/view?usp=sharing" target="_blank" class="btn btn-secondary">
+                            📄 Download PDF Proposal
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Implementation Timeline</h3>
+                    <ul>
+                        <li><strong>Week 1-2:</strong> Discovery & content collection - Gather your messaging, value props, and sample materials</li>
+                        <li><strong>Week 3-4:</strong> GPT training & customization - Build your custom cybersecurity AI</li>
+                        <li><strong>Week 5-6:</strong> Workflow configuration - Set up research and briefing processes</li>
+                        <li><strong>Week 7:</strong> Workspace setup & testing - Configure secure environment</li>
+                        <li><strong>Week 8:</strong> Training sessions - Live team training and practice</li>
+                        <li><strong>Week 9:</strong> Go-live & ongoing support - Begin using with monthly maintenance</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>What Happens Next?</h3>
+                    <ol style="list-style: decimal; margin-left: 2rem;">
+                        <li style="margin-bottom: 1rem;"><strong>Explore the Proposal</strong> - Review this dashboard and try the GPT prototype</li>
+                        <li style="margin-bottom: 1rem;"><strong>Schedule a Follow-Up</strong> - Discuss questions and select payment plan</li>
+                        <li style="margin-bottom: 1rem;"><strong>Sign Agreement</strong> - Execute contract and submit deposit</li>
+                        <li style="margin-bottom: 1rem;"><strong>Begin Implementation</strong> - We start building your system</li>
+                    </ol>
+                </div>
+
+                <div class="card">
+                    <h3>Contact Information</h3>
+                    <p><strong>Mindful AI Design</strong></p>
+                    <p>Where AI Strategy Meets Human-Centered Design</p>
+                    <p style="margin-top: 1.5rem;">We look forward to helping Cohesity build a high-impact, AI-powered sales intelligence system that enhances your competitive edge and transforms how your team prepares, presents, and engages with customers.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation
+        const navItems = document.querySelectorAll('.nav-item');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const section = item.getAttribute('data-section');
+                
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+                
+                contentSections.forEach(content => content.classList.remove('active'));
+                document.getElementById(section).classList.add('active');
+
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
